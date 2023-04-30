@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public Text scoreText;
+    public Text winText;
     Rigidbody2D rb2d;
     private int count = 0;
     void Start()
@@ -25,8 +29,25 @@ public class PlayerController : MonoBehaviour
         {
             count++; //zwieksza wartosc o jeden
             Destroy(collision.gameObject);
+            UpdateScoreText();
         }
     }
+
+    void UpdateScoreText()
+    {
+        scoreText.text = "Score: " + count;
+        if (count == 3)
+        {
+            winText.gameObject.SetActive(true);
+            scoreText.gameObject.SetActive(false);
+            //Thread.Sleep(5000);
+            SceneManager.LoadScene("Level02");
+        }
+
+    }
+
+
+
     void Update()
     {
         
