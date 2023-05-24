@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         rb2d.AddForce(movement * 15);
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        AudioManager.instance.PlaySFX("Bounce");
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,6 +34,7 @@ public class PlayerController : MonoBehaviour
             count++; //zwieksza wartosc o jeden
             Destroy(collision.gameObject);
             UpdateScoreText();
+            AudioManager.instance.PlaySFX("Coin");
         }
     }
 
@@ -41,7 +46,9 @@ public class PlayerController : MonoBehaviour
         
             winText.gameObject.SetActive(true);
             scoreText.gameObject.SetActive(false);
+            AudioManager.instance.PlaySFX("Win");
             StartCoroutine(StopTime());
+            
 
         }
 
